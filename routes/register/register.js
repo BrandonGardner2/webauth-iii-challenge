@@ -6,8 +6,8 @@ module.exports = {
   addUser
 };
 
-async function addUser(username, password) {
-  password = bcrypt.hashSync(password, 8);
+function addUser(user) {
+  user.password = bcrypt.hashSync(user.password, 8);
 
-  return db("users").insert({ username, password });
+  return db("users").insert(user);
 }

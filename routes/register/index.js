@@ -3,10 +3,10 @@ const router = require("express").Router();
 const actions = require("./register");
 
 router.route("/").post(async (req, res) => {
-  const { username, password } = req.body;
-  if (username && password) {
+  const { username, password, department } = req.body;
+  if (username && password && department) {
     try {
-      const count = await actions.addUser(username, password);
+      const count = await actions.addUser({ username, password, department });
       if (count) {
         res.status(200).json({ message: "User successfully added." });
       } else {
@@ -19,7 +19,8 @@ router.route("/").post(async (req, res) => {
     }
   } else {
     res.status(400).json({
-      message: "Please provide a username and password for registration."
+      message:
+        "Please provide a username, password and department for registration."
     });
   }
 });
