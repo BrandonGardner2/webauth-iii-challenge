@@ -16,6 +16,7 @@ export default class Users extends Component {
       })
       .catch(err => {
         console.error("USERS ERROR", err);
+        localStorage.removeItem("token");
       });
   }
 
