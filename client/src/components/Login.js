@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 
 export default class Login extends Component {
   state = {
@@ -23,6 +24,25 @@ export default class Login extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+
+    const info = {
+      username: this.state.username,
+      password: this.state.password
+    };
+
+    axios
+      .post("/login", info)
+      .then(res => {
+        localStorage.setItem("token", res.data.token);
+        this.props.history.push("/users");
+      })
+      .catch(err => {
+        console.error("LOGIN ERROR", err);
+        this.setState({
+          password: "",
+          message: "Invalid credentials"
+        });
+      });
   };
 
   render() {

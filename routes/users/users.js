@@ -4,6 +4,8 @@ module.exports = {
   getUsers
 };
 
-function getUsers() {
-  return db("users");
+function getUsers(department) {
+  return db("users")
+    .select("id", "department", "username")
+    .where({ department });
 }
