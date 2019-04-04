@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Switch, NavLink, Route } from "react-router-dom";
 import "./App.css";
 
+import ProtectedRoute from "./auth/protectedRoute";
 import Login from "./components/Login";
 import Users from "./components/Users";
 
@@ -21,8 +22,8 @@ class App extends Component {
         <main>
           <Switch>
             <Route to="/" exact component={Home} />
-            <Route to="/login" exact component={Login} />
-            <Route to="/users" exact component={Users} />
+            <Route to="/login" component={Login} />
+            <Route to="/users" component={Users} />
           </Switch>
         </main>
       </div>
