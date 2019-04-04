@@ -1,38 +1,44 @@
 import React, { Component } from "react";
-import { Switch, NavLink, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  NavLink,
+  Route
+} from "react-router-dom";
 import "./App.css";
 
 import ProtectedRoute from "./auth/protectedRoute";
+import Home from "./components/Home";
 import Login from "./components/Login";
 import Users from "./components/Users";
+import axios from "axios";
 
-class App extends Component {
+axios.defaults.baseURL = process.env.API_URL || "http://localhost:5000/api";
+
+export default class App extends Component {
   render() {
     return (
       <div className="App">
-        <header>
-          <nav>
-            <NavLink to="/" exact>
-              Home
-            </NavLink>
-            <NavLink to="/login">Login</NavLink>
-            <NavLink to="/users">Users</NavLink>
-          </nav>
-        </header>
-        <main>
-          <Switch>
-            <Route to="/" exact component={Home} />
-            <Route to="/login" component={Login} />
-            <Route to="/users" component={Users} />
-          </Switch>
-        </main>
+        <Router>
+          <header>
+            <nav>
+              <NavLink to="/" exact>
+                Home
+              </NavLink>
+              <NavLink to="/login">Login</NavLink>
+              <NavLink to="/users">Users</NavLink>
+            </nav>
+          </header>
+
+          <main>
+            <Switch>
+              <Route path="/" exact component={Home} />
+              <Route path="/login" component={Login} />
+              <ProtectedRoute path="/users" component={Users} />
+            </Switch>
+          </main>
+        </Router>
       </div>
     );
   }
 }
-
-function Home(props) {
-  return <div>Hey this is the homepage</div>;
-}
-
-export default App;
